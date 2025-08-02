@@ -1,21 +1,39 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1>JavaScript async / await</h1>
-<h2 id="demo"></h2>
+// Ejemplo simple de NodeJS sin usar archivos
 
-<p>Wait 3 seconds (3000 milliseconds) for this page to change.</p>
+// 1. Lista de productos
+const productos = [
+  { id: 1, nombre: "Laptop", precio: 999 },
+  { id: 2, nombre: "Teléfono", precio: 599 },
+  { id: 3, nombre: "Tablet", precio: 299 }
+];
 
-<script>
-async function myDisplay() {
-  let myPromise = new Promise(function(resolve) {
-    setTimeout(function() {resolve("I love You !!");}, 3000);
+// 2. Función para mostrar productos
+function mostrarProductos() {
+  console.log("\nProductos Disponibles:");
+  productos.forEach(producto => {
+    console.log(`${producto.id}. ${producto.nombre} - $${producto.precio}`);
   });
-  document.getElementById("demo").innerHTML = await myPromise;
 }
 
-myDisplay();
-</script>
+// 3. Función para buscar producto
+function buscarProducto(id) {
+  return productos.find(p => p.id === id);
+}
 
-</body>
-</html>
+// 4. Función asíncrona simulada
+async function buscarConDelay(id) {
+  console.log("\nBuscando producto...");
+  await new Promise(resolve => setTimeout(resolve, 1500)); // Simula delay
+  return buscarProducto(id);
+}
+
+// Ejecución del programa
+(async () => {
+  mostrarProductos();
+  
+  const producto = await buscarConDelay(2);
+  console.log("\nResultado de búsqueda:");
+  console.log(producto);
+  
+  console.log("\n¡Ejemplo completado! 🎉");
+})();
